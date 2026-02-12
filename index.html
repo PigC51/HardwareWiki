@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>硬件维基 · RTX 5090 / R9 9955X3D / GTX 1060</title>
+    <!-- Font Awesome 6 (免费品牌图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 全局样式 —— 极简维基风，干净、易读 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f5f9;  /* 柔和灰蓝基底，像纸张 */
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .wiki-container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* 页眉 —— 维基式标题 */
+        .wiki-header {
+            margin-bottom: 2.5rem;
+            border-bottom: 1px solid #c8d1dc;
+            padding-bottom: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .wiki-header h1 {
+            font-size: 2.2rem;
+            font-weight: 550;
+            color: #1e2c3a;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wiki-header h1 i {
+            color: #3a6ea5;  /* 维基蓝 */
+            font-size: 2rem;
+        }
+
+        .wiki-sub {
+            color: #3e5a6d;
+            font-size: 1.1rem;
+            font-weight: 400;
+            background: rgba(58, 110, 165, 0.06);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid #d4dee8;
+        }
+
+        /* 网格 —— 三卡片，像维基的信息框陈列 */
+        .hardware-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 卡片 —— 维基风格信息卡，白底，清晰层次 */
+        .wiki-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,20,40,0.06), 0 2px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-top: 6px solid;  /* 品牌色将在具体卡片设置 */
+            overflow: hidden;
+            backdrop-filter: blur(2px);
+        }
+
+        .wiki-card:hover {
+            box-shadow: 0 16px 28px rgba(0,35,70,0.12);
+            transform: translateY(-3px);
+        }
+
+        /* 卡片头部 —— 型号与徽章 */
+        .card-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 1.5rem 0.8rem 1.5rem;
+        }
+
+        .title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            flex-wrap: wrap;
+        }
+
+        .title-group i {
+            font-size: 1.5rem;
+            width: 1.8rem;
+            text-align: center;
+        }
+
+        /* 品牌图标定制颜色 */
+        .fa-nvidia { color: #76b900; }    /* NVIDIA 标志性绿 */
+        .fa-amd { color: #ed1c24; }       /* AMD 红 */
+        
+        .card-badge {
+            background: #e9ecf0;
+            padding: 0.3rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #1e3a5f;
+            border: 1px solid #ccd7e4;
+            background: white;
+        }
+
+        .badge-latest {
+            background: #1e2c3a;
+            color: white;
+            border: none;
+        }
+
+        /* 硬件类型图标区 —— 模拟“快速辨识” */
+        .hardware-figure {
+            background: #f1f5f9;
+            margin: 0 1.5rem 1rem 1.5rem;
+            padding: 0.9rem 0.5rem;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #2c4056;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid #e2eaf0;
+        }
+
+        .hardware-figure i {
+            font-size: 1.7rem;
+        }
+
+        /* 规格列表 —— 维基百科信息框风格 */
+        .specs-list {
+            padding: 0.2rem 1.5rem 1.2rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.55rem 0;
+            border-bottom: 1px dashed #e5eef4;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .spec-attr {
+            color: #446688;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .spec-value {
+            color: #0a1c2f;
+            font-weight: 550;
+            text-align: right;
+            font-feature-settings: "tnum";
+        }
+
+        /* 卡片底部 —— 维基标签/关键词 */
+        .card-footer {
+            padding: 0.8rem 1.5rem 1.3rem 1.5rem;
+            border-top: 1px solid #eaf0f5;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .chip {
+            background: #f0f5fa;
+            padding: 0.3rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #2b4b6f;
+            border: 1px solid #c8dae6;
+            transition: background 0.1s;
+        }
+
+        .chip i {
+            margin-right: 4px;
+            font-size: 0.7rem;
+            color: #3f6b9c;
+        }
+
+        /* 脚注 —— 模拟维基的引用/声明 */
+        .wiki-footer {
+            margin-top: 3.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #bccbd6;
+            font-size: 0.85rem;
+            color: #4c6379;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.4);
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* 响应式布局 */
+        @media (max-width: 1000px) {
+            .hardware-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hardware-grid {
+                grid-template-columns: 1fr;
+            }
+            .wiki-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            body { padding: 1.2rem; }
+        }
+
+        /* 品牌顶条 —— 对应各卡片 */
+        .card-nvidia { border-top-color: #76b900; }
+        .card-amd { border-top-color: #ed1c24; }
+        
+        /* 辅助文字 */
+        .text-muted {
+            color: #607586;
+            font-size: 0.8rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: #2e6290;
+        }
+    </style>
+</head>
+<body>
+    <div class="wiki-container">
+        <!-- 维基页眉 -->
+        <header class="wiki-header">
+            <h1>
+                <i class="fas fa-microchip"></i> 
+                电脑硬件维基
+                <span style="font-size: 0.9rem; color: #476481; margin-left: 5px; font-weight: 400;">· 非官方档案</span>
+            </h1>
+            <span class="wiki-sub">
+                <i class="fas fa-robot"></i>  RTX 5090 · R9 9955X3D · GTX 1060
+            </span>
+        </header>
+
+        <!-- 三张卡片：未来旗舰 & 经典传奇 -->
+        <div class="hardware-grid">
+            
+            <!-- ===== 显卡：RTX 5090 (NVIDIA) ===== -->
+            <div class="wiki-card card-nvidia">
+                <div class="card-header">
+                    <div class="title-group">
+                        <i class="fas fa-display" style="color: #3a6ea5;"></i>      <!-- 代表显卡 -->
+                        <i class="fab fa-nvidia"></i>
+                        <span>RTX 5090</span>
+                    </div>
+                    <span class="card-badge badge-latest"><i class="fas fa-hourglass-half"></i> 即将发布</span>
+                </div>
+                <!-- 硬件形象简标 -->
+                <div class="hardware-figure">
+                    <i class="fab fa-nvidia" style="font-size: 1.9rem;"></i>
+                    <span style="font-weight: 650;">NVIDIA GeForce</span>
+                    <i class="fas fa-bolt" style="color: #76b900;"></i>
+                </div>
+                <!-- 关键规格 —— Blackwell 架构，次世代旗舰 -->
+                <div class="specs-list">
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-cube" style="width: 16px;"></i> 架构</span><span class="spec-value">Blackwell</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-microchip"></i> 制程</span><span class="spec-value">TSMC 4N (定制)</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-calculator"></i> CUDA核心</span><span class="spec-value">24,576</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-memory"></i> 显存</span><span class="spec-value">32GB GDDR7</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-arrows-left-right"></i> 显存位宽</span><span class="spec-value">384-bit</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-tachometer-alt"></i> 核心频率</span><span class="spec-value">2.4 / 2.9 GHz</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-plug"></i> TDP</span><span class="spec-value">600W</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-calendar"></i> 发布</span><span class="spec-value">预计2025 Q1</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-link"></i> 接口</span><span class="spec-value">PCIe 5.0</span></div>
+                </div>
+                <!-- 标签：特性关键词 -->
+                <div class="card-footer">
+                    <span class="chip"><i class="fas fa-ray"></i> DLSS 5</span>
+                    <span class="chip"><i class="fas fa-tv"></i> DisplayPort 2.1a</span>
+                    <span class="chip"><i class="fas fa-fan"></i> 600W</span>
+                    <span class="chip"><i class="fas fa-shield"></i> Blackwell</span>
+                </div>
+            </div>
+
+            <!-- ===== CPU：AMD Ryzen 9 9955X3D (R9 9955X3D) ===== -->
+            <div class="wiki-card card-amd">
+                <div class="card-header">
+                    <div class="title-group">
+                        <i class="fas fa-microchip" style="color: #8b0000;"></i>   <!-- 处理器图标 -->
+                        <i class="fab fa-amd"></i>
+                        <span>R9 9955X3D</span>
+                    </div>
+                    <span class="card-badge badge-latest"><i class="fas fa-flask"></i> 工程样品</span>
+                </div>
+                <div class="hardware-figure">
+                    <i class="fab fa-amd" style="color: #ed1c24; font-size: 1.9rem;"></i>
+                    <span style="font-weight: 650;">AMD Ryzen 9</span>
+                    <i class="fas fa-cube" style="color: #c0501e;"></i>
+                </div>
+                <div class="specs-list">
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-cube"></i> 架构</span><span class="spec-value">Zen 5 (3D V-Cache)</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-microchip"></i> 制程</span><span class="spec-value">TSMC 4nm</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-tachometer-alt"></i> 核心/线程</span><span class="spec-value">16 / 32</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-forward"></i> 加速频率</span><span class="spec-value">5.7 GHz</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-database"></i> L3缓存</span><span class="spec-value">128MB (3D)</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-bolt"></i> TDP</span><span class="spec-value">170W</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-plug"></i> 插槽</span><span class="spec-value">AM5</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-memory"></i> 内存支持</span><span class="spec-value">DDR5-6400</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-calendar"></i> 发布</span><span class="spec-value">预计2025</span></div>
+                </div>
+                <div class="card-footer">
+                    <span class="chip"><i class="fas fa-box"></i> 3D V-Cache</span>
+                    <span class="chip"><i class="fas fa-tachometer-alt"></i> 5.7GHz</span>
+                    <span class="chip"><i class="fas fa-expand-arrows-alt"></i> PCIe 5.0</span>
+                    <span class="chip"><i class="fas fa-water"></i> EXPO</span>
+                </div>
+            </div>
+
+            <!-- ===== 显卡：GTX 1060 6GB (NVIDIA 经典) ===== -->
+            <div class="wiki-card card-nvidia">
+                <div class="card-header">
+                    <div class="title-group">
+                        <i class="fas fa-display" style="color: #3a6ea5;"></i>
+                        <i class="fab fa-nvidia"></i>
+                        <span>GTX 1060</span>
+                    </div>
+                    <span class="card-badge"><i class="fas fa-trophy"></i> 经典传奇</span>
+                </div>
+                <div class="hardware-figure">
+                    <i class="fab fa-nvidia" style="color: #76b900; font-size: 1.9rem;"></i>
+                    <span style="font-weight: 650;">NVIDIA GeForce</span>
+                    <i class="fas fa-star" style="color: #daa520;"></i>
+                </div>
+                <div class="specs-list">
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-cube"></i> 架构</span><span class="spec-value">Pascal (GP106)</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-microchip"></i> 制程</span><span class="spec-value">16nm</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-calculator"></i> CUDA核心</span><span class="spec-value">1,280</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-memory"></i> 显存</span><span class="spec-value">6GB GDDR5</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-arrows-left-right"></i> 位宽</span><span class="spec-value">192-bit</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-tachometer-alt"></i> 核心频率</span><span class="spec-value">1506 / 1708 MHz</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-plug"></i> TDP</span><span class="spec-value">120W</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-calendar"></i> 发布</span><span class="spec-value">2016年7月</span></div>
+                    <div class="spec-item"><span class="spec-attr"><i class="fas fa-link"></i> 接口</span><span class="spec-value">PCIe 3.0</span></div>
+                </div>
+                <div class="card-footer">
+                    <span class="chip"><i class="fas fa-gamepad"></i> 1080p战神</span>
+                    <span class="chip"><i class="fas fa-chart-line"></i> 热销5年</span>
+                    <span class="chip"><i class="fas fa-bolt"></i> 120W</span>
+                    <span class="chip"><i class="fas fa-shield-alt"></i> G-Sync</span>
+                </div>
+            </div>
+        </div> <!-- 网格结束 -->
+
+        <!-- 硬件维基说明——类似“词条信息” -->
+        <div class="wiki-footer">
+            <span><i class="fas fa-wikipedia-w"></i> 本页为硬件维基展示条目 · 规格基于传闻/公开资料整理，不代表最终零售版。</span>
+            <span>
+                <i class="fas fa-tag"></i> RTX 5090 · R9 9955X3D · GTX 1060 
+                <i class="fas fa-pencil-alt" style="margin-left: 12px;"></i>
+            </span>
+        </div>
+
+        <!-- 微型索引 —— 模拟维基“参见”栏 -->
+        <div style="display: flex; margin-top: 2rem; gap: 1.2rem; justify-content: flex-start; font-size: 0.9rem; color: #1f4a6e; background: rgba(255,255,255,0.5); padding: 0.9rem 1.8rem; border-radius: 40px; backdrop-filter: blur(4px); border: 1px solid white;">
+            <i class="fas fa-info-circle"></i> 关于这些硬件：
+            <span style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <span><i class="fab fa-nvidia"></i> RTX 5090 — Blackwell, GDDR7, 600W 次世代旗舰</span>
+                <span><i class="fab fa-amd"></i> R9 9955X3D — Zen5 3D缓存, 16核, AM5</span>
+                <span><i class="fab fa-nvidia"></i> GTX 1060 — 永不言弃的1060, 史上最甜点</span>
+            </span>
+        </div>
+    </div> <!-- wiki-container -->
+
+    <!-- 简单的背景装饰线条 (纯css) -->
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(90deg, #76b900, #ed1c24, #3a6ea5, #76b900); opacity: 0.3; pointer-events: none;"></div>
+</body>
+</html>
